@@ -1,4 +1,4 @@
-# TravelShield — Product Requirements Document
+# Kyro — Product Requirements Document
 
 **Version:** 1.0  
 **Status:** Hackathon Build  
@@ -29,9 +29,9 @@ Stellar is the preferred settlement layer for institutional cross-border stablec
 | Comply with Travel Rule naively | Full PII exposed on-chain and in transit. Counterparty sees your client data. Data breach surface is enormous. |
 | Skip compliance | Regulatory fines. Enforcement actions. License risk. |
 
-**There is no existing system on Stellar that satisfies both simultaneously.** TravelShield is that system.
+**There is no existing system on Stellar that satisfies both simultaneously.** Kyro is that system.
 
-### 1.3 What TravelShield Proves
+### 1.3 What Kyro Proves
 
 > A sending institution can prove to a verifier contract — and through a view key to a regulator — that a transfer is Travel Rule compliant, without revealing any PII to the public chain, to the counterparty, or to any intermediate actor.
 
@@ -41,7 +41,7 @@ This is **selective disclosure**: prove compliance without revealing the evidenc
 
 ## 2. Solution Overview
 
-TravelShield has three layers:
+Kyro has three layers:
 
 1. **Off-chain ZK circuit (Circom)** — generates a Groth16 proof that the sender's identity data satisfies Travel Rule fields, the amount crosses or stays under the threshold, and neither party appears on a committed sanctions list.
 
@@ -53,7 +53,7 @@ TravelShield has three layers:
 
 ## 3. Stellar Protocol Context (Why Now)
 
-Understanding why TravelShield is only possible today is important for the submission narrative and for your own comprehension.
+Understanding why Kyro is only possible today is important for the submission narrative and for your own comprehension.
 
 ### Protocol 25 — X-Ray (Mainnet: January 22, 2026)
 
@@ -70,7 +70,7 @@ Understanding why TravelShield is only possible today is important for the submi
 | Scalar-field arithmetic (add, sub, mul, pow, inv) | CAP-0080 | Range proof arithmetic for the $1,000 threshold check without leaving the BN254 scalar field. |
 | Curve-membership checks (BN254 + BLS12-381) | CAP-0080 | Validates that proof elements are actually on the curve before the pairing check — prevents malformed-proof attacks. |
 
-**TravelShield explicitly uses CAP-0074, CAP-0075, and CAP-0080. State this in your README.**
+**Kyro explicitly uses CAP-0074, CAP-0075, and CAP-0080. State this in your README.**
 
 ---
 
@@ -147,10 +147,10 @@ transfer_nonce              // random value, prevents replay
 
 ```
 circuits/
-  travelshield.circom          // main circuit
-  travelshield.r1cs            // compiled constraint system
-  travelshield.wasm            // witness generator (used in browser)
-  travelshield_final.zkey      // proving key (after Powers of Tau + phase 2)
+  Kyro.circom          // main circuit
+  Kyro.r1cs            // compiled constraint system
+  Kyro.wasm            // witness generator (used in browser)
+  Kyro_final.zkey      // proving key (after Powers of Tau + phase 2)
   verification_key.json        // used by Soroban contract
 ```
 
@@ -162,7 +162,7 @@ For hackathon purposes use the Hermez Powers of Tau (ptau) ceremony file (`power
 
 ## 6. Soroban Contract Specification
 
-### 6.1 Contract: `TravelShieldVerifier`
+### 6.1 Contract: `KyroVerifier`
 
 Written in Rust using the Soroban SDK.
 
@@ -183,7 +183,7 @@ fn init(env: Env, admin: Address, sanctions_root: BytesN<32>)
 // Core verification + transfer gate
 fn verify_and_transfer(
     env: Env,
-    proof: TravelShieldProof,         // Groth16 proof (pi_a, pi_b, pi_c)
+    proof: KyroProof,         // Groth16 proof (pi_a, pi_b, pi_c)
     public_signals: PublicSignals,    // identity_commitment, nullifier, amount_threshold_flag, sanctions_root, transfer_nonce
     transfer: TransferDetails,        // from, to, amount, asset
 ) -> Result<(), Error>
@@ -229,7 +229,7 @@ The `vk_x` computation is a **multi-scalar multiplication** — this is exactly 
 ### 6.3 Contract deployment
 
 - Deploy to Stellar Testnet first, get a contract ID
-- Use `stellar contract deploy --wasm target/wasm32-unknown-unknown/release/travelshield.wasm`
+- Use `stellar contract deploy --wasm target/wasm32-unknown-unknown/release/Kyro.wasm`
 
 ---
 
@@ -247,7 +247,7 @@ The `vk_x` computation is a **multi-scalar multiplication** — this is exactly 
 
 #### `/` — Home / Landing
 
-Single page explaining TravelShield in one paragraph. Two CTAs: "Send Transfer" and "Regulator View". No cards, no animations.
+Single page explaining Kyro in one paragraph. Two CTAs: "Send Transfer" and "Regulator View". No cards, no animations.
 
 #### `/transfer` — Sender Flow
 
@@ -389,29 +389,29 @@ npm install circomlib circomlibjs
 rustup target add wasm32-unknown-unknown
 
 # Next.js project
-npx create-next-app@latest travelshield-app --typescript --app
-cd travelshield-app
+npx create-next-app@latest Kyro-app --typescript --app
+cd Kyro-app
 npm install @mantine/core @mantine/hooks @mantine/form @mantine/notifications
 npm install @stellar/stellar-sdk snarkjs eciesjs
 ```
 
 ### Phase 1 — Circuit (Day 1, ~6 hours)
 
-1. Write `travelshield.circom` — start with just the identity commitment and nullifier, get those compiling first
+1. Write `Kyro.circom` — start with just the identity commitment and nullifier, get those compiling first
 2. Add the threshold comparator using `circomlib/comparators`
 3. Add the Merkle exclusion proof using `circomlib/merkle` — this is the hardest part
-4. Compile: `circom travelshield.circom --r1cs --wasm --sym`
+4. Compile: `circom Kyro.circom --r1cs --wasm --sym`
 5. Run trusted setup:
    ```bash
    snarkjs powersoftau new bn128 16 pot16_0000.ptau
    # Or download: https://hermez.s3-eu-west-1.amazonaws.com/powersOfTau28_hez_final_16.ptau
-   snarkjs groth16 setup travelshield.r1cs pot_final.ptau travelshield_0000.zkey
-   snarkjs zkey contribute travelshield_0000.zkey travelshield_final.zkey
-   snarkjs zkey export verificationkey travelshield_final.zkey verification_key.json
+   snarkjs groth16 setup Kyro.r1cs pot_final.ptau Kyro_0000.zkey
+   snarkjs zkey contribute Kyro_0000.zkey Kyro_final.zkey
+   snarkjs zkey export verificationkey Kyro_final.zkey verification_key.json
    ```
 6. Test proof generation:
    ```bash
-   snarkjs groth16 fullprove input.json travelshield_js/travelshield.wasm travelshield_final.zkey proof.json public.json
+   snarkjs groth16 fullprove input.json Kyro_js/Kyro.wasm Kyro_final.zkey proof.json public.json
    snarkjs groth16 verify verification_key.json public.json proof.json
    ```
 
@@ -481,7 +481,7 @@ npm install @stellar/stellar-sdk snarkjs eciesjs
 Your README is a judge artifact. Structure it exactly like this:
 
 ```markdown
-# TravelShield
+# Kyro
 
 ## The Problem
 [2 sentences on FATF Travel Rule + the privacy paradox on Stellar]
@@ -490,7 +490,7 @@ Your README is a judge artifact. Structure it exactly like this:
 [2 sentences: ZK proof of Travel Rule compliance, selective disclosure via view key]
 
 ## Why Now — Stellar Protocol 26
-[Table: primitive → CAP → what TravelShield uses it for]
+[Table: primitive → CAP → what Kyro uses it for]
 Explicitly name CAP-0074 (BN254 pairing), CAP-0075 (Poseidon), CAP-0080 (MSM)
 
 ## Architecture
