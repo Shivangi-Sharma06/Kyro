@@ -1,0 +1,10 @@
+.env.local
+frontend/.env.local
+node_modules/
+frontend/node_modules/
+circuits/node_modules/
+circuits/build/
+target/
+contracts/kyro-verifier/target/
+.next/
+frontend/.next/

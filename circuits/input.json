@@ -1,0 +1,19 @@
+{
+  "_comment": "Mock test values only. Do not use these identities, hashes, roots, or paths in production.",
+  "originator_name_hash": "123456789",
+  "originator_address_hash": "0",
+  "originator_id_hash": "987654321",
+  "beneficiary_name_hash": "0",
+  "beneficiary_country_code": "276",
+  "transfer_amount": "150000",
+  "sanctions_merkle_root": "11546651719470977236154438904844283504702699913129200799367341722512246867540",
+  "originator_path_values": ["0", "0", "0", "0"],
+  "originator_path_indices": ["0", "0", "0", "0"],
+  "beneficiary_path_values": ["0", "0", "0", "0"],
+  "beneficiary_path_indices": ["0", "0", "0", "0"],
+  "identity_commitment": "16832421271961222550979173996485995711342823810308835997146707681980704453417",
+  "nullifier": "12716975181642911604608435837489371674732634577387112131490126659961508077207",
+  "amount_threshold_flag": "1",
+  "sanctions_root_public": "11546651719470977236154438904844283504702699913129200799367341722512246867540",
+  "transfer_nonce": "999888777"
+}

@@ -1,0 +1,29 @@
+{
+  "name": "kyro-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@mantine/core": "^7.12.0",
+    "@mantine/form": "^7.12.0",
+    "@mantine/hooks": "^7.12.0",
+    "@mantine/notifications": "^7.12.0",
+    "@stellar/stellar-sdk": "^12.3.0",
+    "circomlibjs": "^0.1.7",
+    "eciesjs": "^0.4.9",
+    "next": "^15.0.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "snarkjs": "^0.7.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.3.0",
+    "typescript": "^5.0.0"
+  }
+}

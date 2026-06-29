@@ -1,0 +1,13 @@
+{
+  "name": "kyro",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "test": "npm run test:contract && npm run build",
+    "test:contract": "cargo test --manifest-path contracts/kyro-verifier/Cargo.toml",
+    "build:contract": "cargo build --release --target wasm32-unknown-unknown --manifest-path contracts/kyro-verifier/Cargo.toml",
+    "setup:circuit": "bash circuits/scripts/setup.sh"
+  }
+}
