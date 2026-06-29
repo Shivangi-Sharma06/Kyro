@@ -2,9 +2,16 @@ html,
 body {
   margin: 0;
   min-height: 100%;
-  background: #0d0f12;
-  color: #ffffff;
+  background-color: #080a0f;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+  color: #f4f4f5;
   font-family: var(--font-inter), Inter, sans-serif;
+  overflow-x: hidden;
 }
 
 body {
@@ -12,33 +19,161 @@ body {
 }
 
 a {
-  color: #3b82f6;
+  color: #60a5fa;
   text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #93c5fd;
 }
 
 code,
 pre,
 .mono {
   font-family: var(--font-mono), "JetBrains Mono", monospace;
+  font-size: 0.9em;
 }
 
+/* Glassmorphism Panels */
+.cyber-card {
+  background: rgba(13, 17, 24, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cyber-card:hover {
+  border-color: rgba(96, 165, 250, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(96, 165, 250, 0.05);
+}
+
+/* Glowing Border Effect */
+.glow-blue {
+  border-color: rgba(59, 130, 246, 0.3) !important;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.1) !important;
+}
+
+.glow-green {
+  border-color: rgba(16, 185, 129, 0.3) !important;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.1) !important;
+}
+
+/* Text Gradient */
+.text-gradient {
+  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom terminal console style */
+.terminal-box {
+  background: #06080c;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 12px;
+  font-family: var(--font-mono), monospace;
+  color: #38bdf8;
+  font-size: 13px;
+  line-height: 1.5;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* Glowing Indicator Dots */
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulse-animation 2s infinite;
+}
+
+.pulse-dot.blue {
+  background-color: #3b82f6;
+  box-shadow: 0 0 8px #3b82f6;
+}
+
+.pulse-dot.green {
+  background-color: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.pulse-dot.orange {
+  background-color: #f59e0b;
+  box-shadow: 0 0 8px #f59e0b;
+}
+
+@keyframes pulse-animation {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080a0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f2937;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #374151;
+}
+
+/* Forms override */
 .mantine-Input-input,
 .mantine-Textarea-input,
 .mantine-Select-input,
 .mantine-NumberInput-input {
-  background: #161a1f;
-  color: #ffffff;
-  border-color: #2a3038;
+  background: rgba(13, 17, 24, 0.8) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 6px !important;
+  transition: border-color 0.2s ease !important;
 }
 
-.mantine-Input-label,
-.mantine-Textarea-label,
-.mantine-Select-label,
-.mantine-NumberInput-label {
-  color: #ffffff;
+.mantine-Input-input:focus,
+.mantine-Textarea-input:focus,
+.mantine-Select-input:focus,
+.mantine-NumberInput-input:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
 }
 
 .mantine-Table-table {
-  background: #161a1f;
-  color: #ffffff;
+  background: transparent !important;
+  color: #f4f4f5 !important;
+}
+
+.mantine-Table-tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.mantine-Table-td {
+  padding: 12px 16px !important;
 }

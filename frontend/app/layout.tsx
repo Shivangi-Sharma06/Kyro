@@ -5,6 +5,7 @@ import "./globals.css";
 import { ColorSchemeScript, MantineProvider, createTheme } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import Header from "./components/Header";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const jetBrainsMono = JetBrains_Mono({
@@ -58,8 +59,8 @@ const theme = createTheme({
 });
 
 export const metadata = {
-  title: "Kyro",
-  description: "ZK-powered Travel Rule compliance on Stellar",
+  title: "Kyro - Travel Rule ZK Shield",
+  description: "ZK-powered FATF Travel Rule compliance and selective disclosure on Stellar",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -71,6 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <MantineProvider theme={theme} defaultColorScheme="dark">
           <Notifications position="top-right" />
+          {/* <Header /> */}
           {children}
         </MantineProvider>
       </body>
